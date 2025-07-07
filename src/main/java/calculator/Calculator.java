@@ -7,10 +7,13 @@ import exception.DivideByZeroException;
 import exception.InvalidOperatorException;
 
 public class Calculator {
+	private static final double PI = 3.14159;
 	private final List<Double> resultList;
+	private final List<Double> circleList;
 
 	public Calculator() {
 		resultList = new ArrayList<>();
+		circleList = new ArrayList<>();
 	}
 
 	public Double calculate(int num1, int num2, char operator) throws InvalidOperatorException, DivideByZeroException {
@@ -55,6 +58,32 @@ public class Calculator {
 			System.out.println("저장한 결과가 없습니다.");
 		} else {
 			for (Double d : resultList) {
+				System.out.println(d);
+			}
+		}
+	}
+
+
+	public double calculateCircle(double radius) {
+		double result = PI * radius * radius;
+		circleList.add(result);
+		return result;
+	}
+
+	public List<Double> getCircleList() {
+		return new ArrayList<>(circleList);
+	}
+
+	public void setCircleList(List<Double> circleList) {
+		this.circleList.clear();
+		this.circleList.addAll(circleList);
+	}
+
+	public void inquiryCircleList() {
+		if (circleList.isEmpty()) {
+			System.out.println("저장한 결과가 없습니다.");
+		} else  {
+			for (Double d : circleList) {
 				System.out.println(d);
 			}
 		}

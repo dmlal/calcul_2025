@@ -15,50 +15,25 @@ public class App {
 
 		boolean continueCalculation = true;
 		while (continueCalculation) {
-			int firstNum = 0;
+			System.out.println("1. 사칙연산 \n  2. 원 넓이 계산");
+
+			int choice = 0;
+
 			do {
-				System.out.println("첫 번째 숫자를 입력하세요: ");
 				while (!sc.hasNextInt()) {
-					System.out.println("숫자를 입력해주세요.");
+					System.out.println("1 또는 2를 입력해주세요.");
 					sc.next();
 				}
-				firstNum = sc.nextInt();
-				if (firstNum < 0) {
-					System.out.println("0 이상의 숫자를 입력해주세요.");
+				choice = sc.nextInt();
+				if (choice != 1 && choice != 2) {
+					System.out.println("1 또는 2를 입력해주세요.");
 				}
-			} while (firstNum < 0);
+			} while (choice != 1 && choice != 2);
 
-			int secondNum = 0;
-			do {
-				System.out.println("두 번째 숫자를 입력하세요: ");
-				while (!sc.hasNextInt()) {
-					System.out.println("숫자를 입력해주세요.");
-					sc.next();
-				}
-				secondNum = sc.nextInt();
-				if (secondNum < 0) {
-					System.out.println("0 이상의 숫자를 입력해주세요.");
-				}
-			} while (secondNum < 0);
-
-			char operator = ' ';
-
-			do {
-				System.out.println("사칙연산 기호를 입력하세요: ");
-				operator = sc.next().charAt(0);
-
-				if (operator != '+' && operator != '-' && operator != '*' && operator != '/') {
-					System.out.println("잘못된 연산자입니다. +, -, *, / 중 하나를 입력해주세요.");
-				}
-			} while (operator != '+' && operator != '-' && operator != '*' && operator != '/');
-
-			try {
-				double result = calculator.calculate(firstNum, secondNum, operator);
-				System.out.println("결과값: " + result);
-				System.out.println();
-			} catch (DivideByZeroException | InvalidOperatorException e) {
-				System.out.println(e.getMessage());
-				continue;
+			if (choice == 1) {
+				calculate(calculator, sc);
+			} else {
+				circleCalculate(calculator, sc);
 			}
 
 			sc.nextLine();
@@ -86,6 +61,73 @@ public class App {
 			}
 		}
 		sc.close();
+	}
+
+	private static void calculate(Calculator calculator, Scanner sc) {
+		int firstNum = 0;
+		do {
+			System.out.println("첫 번째 숫자를 입력하세요: ");
+			while (!sc.hasNextInt()) {
+				System.out.println("숫자를 입력해주세요.");
+				sc.next();
+			}
+			firstNum = sc.nextInt();
+			if (firstNum < 0) {
+				System.out.println("0 이상의 숫자를 입력해주세요.");
+			}
+		} while (firstNum < 0);
+
+		char operator = ' ';
+
+		do {
+			System.out.println("사칙연산 기호를 입력하세요: ");
+			operator = sc.next().charAt(0);
+
+			if (operator != '+' && operator != '-' && operator != '*' && operator != '/') {
+				System.out.println("잘못된 연산자입니다. +, -, *, / 중 하나를 입력해주세요.");
+			}
+		} while (operator != '+' && operator != '-' && operator != '*' && operator != '/');
+
+		int secondNum = 0;
+		do {
+			System.out.println("두 번째 숫자를 입력하세요: ");
+			while (!sc.hasNextInt()) {
+				System.out.println("숫자를 입력해주세요.");
+				sc.next();
+			}
+			secondNum = sc.nextInt();
+			if (secondNum < 0) {
+				System.out.println("0 이상의 숫자를 입력해주세요.");
+			}
+		} while (secondNum < 0);
+
+		try {
+			double result = calculator.calculate(firstNum, secondNum, operator);
+			System.out.println("결과값: " + result);
+			System.out.println();
+		} catch (DivideByZeroException | InvalidOperatorException e) {
+			System.out.println(e.getMessage());
+			System.out.println();
+		}
+	}
+
+	private static void circleCalculate(Calculator calculator, Scanner sc) {
+		double radius = 0;
+		do {
+			System.out.println("원의 반지름을 입력하세요: ");
+			while (!sc.hasNextDouble()) {
+				System.out.println("숫자를 입력해주세요.");
+				sc.next();
+			}
+			radius = sc.nextDouble();
+			if (radius < 0) {
+				System.out.println("0 이상의 숫자를 입력해주세요.");
+			}
+		} while (radius < 0);
+
+		double result = calculator.calculateCircle(radius);
+		System.out.println("원 넓이: " + result);
+		System.out.println();
 	}
 
 	private static String showMenu(Scanner sc) {
