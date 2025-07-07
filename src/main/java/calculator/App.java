@@ -4,11 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import exception.DivideByZeroException;
+import exception.InvalidOperatorException;
+
 public class App {
 	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
+		Calculator calculator = new Calculator();
 
-		List<Double> resultList = new ArrayList<>();
+		Scanner sc = new Scanner(System.in);
 
 		boolean continueCalculation = true;
 		while (continueCalculation) {
@@ -49,22 +52,14 @@ public class App {
 				}
 			} while (operator != '+' && operator != '-' && operator != '*' && operator != '/');
 
-			if (operator == '/' && secondNum == 0) {
-				System.out.println("나눗셈 연산에서 분모(두번째 정수)에 0이 입력될 수 없습니다.");
+			try {
+				double result = calculator.calculate(firstNum, secondNum, operator);
+				System.out.println("결과값: " + result);
+				System.out.println();
+			} catch (DivideByZeroException | InvalidOperatorException e) {
+				System.out.println(e.getMessage());
 				continue;
 			}
-
-			double result = switch (operator) {
-				case '+' -> firstNum + secondNum;
-				case '-' -> firstNum - secondNum;
-				case '*' -> firstNum * secondNum;
-				case '/' -> (double)firstNum / secondNum;
-				default -> 0;
-			};
-			System.out.println("결과값: " + result);
-			System.out.println();
-
-			resultList.add(result);
 
 			sc.nextLine();
 			while (true) {
@@ -76,19 +71,20 @@ public class App {
 					continueCalculation = false;
 					break;
 				} else if (selectMenu.equals("remove")) {
-					if (!resultList.isEmpty()) {
-						resultList.remove(0);
+					if (calculator.hasResult()) {
+						calculator.removeFirstResult();
 						System.out.println("삭제되었습니다.\n");
 					} else {
 						System.out.println("삭제할 결과가 없습니다.\n");
 					}
 				} else if (selectMenu.equals("inquiry")) {
-					if (resultList.isEmpty()) {
-						System.out.println("저장된 결과가 없습니다.\n");
-					} else {
-						for (Double d : resultList) {
+					if (calculator.hasResult()) {
+						for (Double d : calculator.getResultList()) {
 							System.out.println(d);
 						}
+						System.out.println();
+					} else {
+						System.out.println("저장된 결과가 없습니다.\n");
 					}
 				} else {
 					break;
@@ -107,7 +103,7 @@ public class App {
 			if (!input.equals("1") && !input.equals("y") && !input.equals("ㅛ")
 				&& !input.equals("2") && !input.equals("n") && !input.equals("ㅜ") && !input.equals("exit")
 				&& !input.equals("remove") && !input.equals("inquiry")) {
-				System.out.println("올바른 선택지를 입력해주세요.");
+				System.out.println("올바른 선택지를 입력해주세요.\n");
 			}
 		} while (!input.equals("1") && !input.equals("y") && !input.equals("ㅛ")
 			&& !input.equals("2") && !input.equals("n") && !input.equals("ㅜ") && !input.equals("exit")
