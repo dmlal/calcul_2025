@@ -18,5 +18,7 @@ public class App {
         System.out.println("첫 번째 숫자: " + firstNum);
         System.out.println("두 번째 숫자: " + secondNum);
         System.out.println("연산자: " + operator);
+
+        sc.close();
     }
 }
