@@ -77,16 +77,17 @@ public class App {
 			}
 		} while (firstNum < 0);
 
-		char operator = ' ';
-
+		String operatorInput = "";
 		do {
 			System.out.println("사칙연산 기호를 입력하세요: ");
-			operator = sc.next().charAt(0);
+			operatorInput = sc.next();
 
-			if (operator != '+' && operator != '-' && operator != '*' && operator != '/') {
+			if (operatorInput.equals("+") || operatorInput.equals("-") || operatorInput.equals("*") || operatorInput.equals("/")) {
+				break;
+			} else {
 				System.out.println("잘못된 연산자입니다. +, -, *, / 중 하나를 입력해주세요.");
 			}
-		} while (operator != '+' && operator != '-' && operator != '*' && operator != '/');
+		} while (true);
 
 		int secondNum = 0;
 		do {
@@ -102,7 +103,7 @@ public class App {
 		} while (secondNum < 0);
 
 		try {
-			double result = calculator.calculate(firstNum, secondNum, operator);
+			double result = calculator.calculate(firstNum, secondNum, operatorInput);
 			System.out.println("결과값: " + result);
 			System.out.println();
 		} catch (DivideByZeroException | InvalidOperatorException e) {
