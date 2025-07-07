@@ -84,10 +84,11 @@ public class App {
 			System.out.println("사칙연산 기호를 입력하세요: ");
 			operatorInput = sc.next();
 
-			if (operatorInput.equals("+") || operatorInput.equals("-") || operatorInput.equals("*") || operatorInput.equals("/")) {
+			if (operatorInput.equals("+") || operatorInput.equals("-") || operatorInput.equals("*")
+				|| operatorInput.equals("/") || operatorInput.equals("%")) {
 				break;
 			} else {
-				System.out.println("잘못된 연산자입니다. +, -, *, / 중 하나를 입력해주세요.");
+				System.out.println("잘못된 연산자입니다. +, -, *, /, % 중 하나를 입력해주세요.");
 			}
 		} while (true);
 
