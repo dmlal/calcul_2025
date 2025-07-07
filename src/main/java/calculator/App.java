@@ -1,15 +1,17 @@
 package calculator;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class App {
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 
-		double[] resultArr = new double[10];
-		int resultIndex = 0;
+		List<Double> resultList = new ArrayList<>();
 
-		while (true) {
+		boolean continueCalculation = true;
+		while (continueCalculation) {
 			int firstNum = 0;
 			do {
 				System.out.println("첫 번째 숫자를 입력하세요: ");
@@ -53,44 +55,64 @@ public class App {
 			}
 
 			double result = switch (operator) {
-					case '+' -> firstNum + secondNum;
-					case '-' -> firstNum - secondNum;
-					case '*' -> firstNum * secondNum;
-					case '/' -> (double) firstNum / secondNum;
-					default -> 0;
+				case '+' -> firstNum + secondNum;
+				case '-' -> firstNum - secondNum;
+				case '*' -> firstNum * secondNum;
+				case '/' -> (double)firstNum / secondNum;
+				default -> 0;
 			};
 			System.out.println("결과값: " + result);
+			System.out.println();
 
-			resultArr[resultIndex] = result;
-			resultIndex++;
+			resultList.add(result);
 
-			if (resultIndex == 10) {
-				for(int i = 0; i < 9; i++){
-					resultArr[i] = resultArr[i+1];
+			sc.nextLine();
+			while (true) {
+				String selectMenu = showMenu(sc);
+
+				if (selectMenu.equals("exit") || selectMenu.equals("2") || selectMenu.equals("n") || selectMenu.equals(
+					"ㅜ")) {
+					System.out.println("계산을 종료합니다.\n");
+					continueCalculation = false;
+					break;
+				} else if (selectMenu.equals("remove")) {
+					if (!resultList.isEmpty()) {
+						resultList.remove(0);
+						System.out.println("삭제되었습니다.\n");
+					} else {
+						System.out.println("삭제할 결과가 없습니다.\n");
+					}
+				} else if (selectMenu.equals("inquiry")) {
+					if (resultList.isEmpty()) {
+						System.out.println("저장된 결과가 없습니다.\n");
+					} else {
+						for (Double d : resultList) {
+							System.out.println(d);
+						}
+					}
+				} else {
+					break;
 				}
-				resultArr[9] = result;
 			}
-
-
-			String input = "";
-			do {
-				System.out.println("더 계산하시겠습니까? 계속 하시려면 y를 입력해주세요. (n 또는 exit 입력 시 종료)");
-				sc.nextLine();
-				input = sc.nextLine().trim().toLowerCase();
-
-				if (!input.equals("1") && !input.equals("y") && !input.equals("ㅛ")
-					&& !input.equals("2") && !input.equals("n") && !input.equals("ㅜ") && !input.equals("exit")) {
-					System.out.println("올바른 선택지를 입력해주세요.");
-				}
-			} while (!input.equals("1") && !input.equals("y") && !input.equals("ㅛ")
-				&& !input.equals("2") && !input.equals("n") && !input.equals("ㅜ") && !input.equals("exit"));
-
-			if (input.equals("exit") || input.equals("2") || input.equals("n") || input.equals("ㅜ")) {
-				System.out.println("계산을 종료합니다.");
-				break;
-			}
-
 		}
 		sc.close();
+	}
+
+	private static String showMenu(Scanner sc) {
+		String input = "";
+		do {
+			System.out.println("계속 계산은 y. \n종료는 n 또는 exit. \n가장 오래된 값 제거는 remove \n저장된 결과 전체 조회는 inquiry");
+			input = sc.nextLine().trim().toLowerCase();
+
+			if (!input.equals("1") && !input.equals("y") && !input.equals("ㅛ")
+				&& !input.equals("2") && !input.equals("n") && !input.equals("ㅜ") && !input.equals("exit")
+				&& !input.equals("remove") && !input.equals("inquiry")) {
+				System.out.println("올바른 선택지를 입력해주세요.");
+			}
+		} while (!input.equals("1") && !input.equals("y") && !input.equals("ㅛ")
+			&& !input.equals("2") && !input.equals("n") && !input.equals("ㅜ") && !input.equals("exit")
+			&& !input.equals("remove") && !input.equals("inquiry"));
+
+		return input;
 	}
 }
