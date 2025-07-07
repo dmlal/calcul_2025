@@ -6,6 +6,9 @@ public class App {
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 
+		double[] resultArr = new double[10];
+		int resultIndex = 0;
+
 		while (true) {
 			int firstNum = 0;
 			do {
@@ -49,14 +52,17 @@ public class App {
 				continue;
 			}
 
-			int result = switch (operator) {
+			double result = switch (operator) {
 					case '+' -> firstNum + secondNum;
 					case '-' -> firstNum - secondNum;
 					case '*' -> firstNum * secondNum;
-					case '/' -> firstNum / secondNum;
+					case '/' -> (double) firstNum / secondNum;
 					default -> 0;
 			};
 			System.out.println("결과값: " + result);
+
+			resultArr[resultIndex] = result;
+			resultIndex++;
 
 			String input = "";
 
