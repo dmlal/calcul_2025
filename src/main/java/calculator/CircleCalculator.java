@@ -3,7 +3,7 @@ package calculator;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CircleCalculator extends Calculator {
+public class CircleCalculator extends Calculator<Double> {
 	private static final double PI = 3.14159;
 	private final List<Double> circleList;
 

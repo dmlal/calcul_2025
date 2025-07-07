@@ -4,10 +4,11 @@ import java.util.Scanner;
 
 import exception.DivideByZeroException;
 import exception.InvalidOperatorException;
+import operator.enums.OperatorType;
 
 public class App {
 	public static void main(String[] args) {
-		ArithmeticCalculator arithmeticCalculator = new ArithmeticCalculator();
+		ArithmeticCalculator<Double> arithmeticCalculator = new ArithmeticCalculator<>();
 		CircleCalculator circleCalculator = new CircleCalculator();
 
 		Scanner sc = new Scanner(System.in);
@@ -57,6 +58,16 @@ public class App {
 				} else if (selectMenu.equals("circle")) {
 					circleCalculator.inquiryCircleList();
 					System.out.println();
+				} else if (selectMenu.equals("greater")) {
+					System.out.println("비교 값을 입력하세요.");
+					while (!sc.hasNextDouble()) {
+						System.out.println("숫자를 입력하세요.");
+						sc.next();
+					}
+					double result = sc.nextDouble();
+					sc.nextLine();
+					arithmeticCalculator.resultsGreaterThanInputValue(result);
+					System.out.println();
 				} else {
 					break;
 				}
@@ -65,7 +76,7 @@ public class App {
 		sc.close();
 	}
 
-	private static void calculate(ArithmeticCalculator arithmeticCalculator, Scanner sc) {
+	private static void calculate(ArithmeticCalculator<Double> arithmeticCalculator, Scanner sc) {
 		double firstNum = 0;
 		do {
 			System.out.println("첫 번째 숫자를 입력하세요: ");
@@ -82,8 +93,8 @@ public class App {
 		String operatorInput = "";
 		do {
 			System.out.println("사칙연산 기호를 입력하세요: ");
-			operatorInput = sc.next();
 
+			operatorInput = sc.next();
 			if (operatorInput.equals("+") || operatorInput.equals("-") || operatorInput.equals("*")
 				|| operatorInput.equals("/") || operatorInput.equals("%")) {
 				break;
@@ -137,7 +148,7 @@ public class App {
 	private static String showMenu(Scanner sc) {
 		String input = "";
 		do {
-			System.out.println("계속 계산은 y. \n종료는 n 또는 exit. \n가장 오래된 값 제거는 remove \n저장된 결과 전체 조회는 inquiry \n원 넓이 결과 조회는 circle");
+			System.out.println("계속 계산은 y. \n종료는 n 또는 exit. \n가장 오래된 값 제거는 remove \n저장된 결과 전체 조회는 inquiry \n원 넓이 결과 조회는 circle \n입력 값보다 큰 결과 조회는 greater");
 			input = sc.nextLine().trim().toLowerCase();
 
 			if (checkInputStringValue(input)) {
@@ -151,6 +162,6 @@ public class App {
 	private static boolean checkInputStringValue(String input) {
 		return !input.equals("1") && !input.equals("y") && !input.equals("ㅛ")
 			&& !input.equals("2") && !input.equals("n") && !input.equals("ㅜ") && !input.equals("exit")
-			&& !input.equals("remove") && !input.equals("inquiry") && !input.equals("circle");
+			&& !input.equals("remove") && !input.equals("inquiry") && !input.equals("circle") && !input.equals("greater");
 	}
 }

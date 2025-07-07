@@ -1,9 +1,8 @@
 package calculator;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.List;
-import java.util.Map;
 
 import exception.DivideByZeroException;
 import exception.InvalidOperatorException;
@@ -15,14 +14,14 @@ import operator.Operator;
 import operator.SubtractOperator;
 import operator.enums.OperatorType;
 
-public class ArithmeticCalculator<T extends Number> extends Calculator {
+public class ArithmeticCalculator<T extends Number> extends Calculator<T> {
 	private final List<Double> resultList;
 
-	private final Map<OperatorType, Operator> operatorMap;
+	private final EnumMap<OperatorType, Operator> operatorMap;
 
 	public ArithmeticCalculator() {
 		resultList = new ArrayList<>();
-		operatorMap = new HashMap<>();
+		operatorMap = new EnumMap<>(OperatorType.class);
 
 		operatorMap.put(OperatorType.ADD, new AddOperator());
 		operatorMap.put(OperatorType.SUBTRACT, new SubtractOperator());
@@ -74,6 +73,19 @@ public class ArithmeticCalculator<T extends Number> extends Calculator {
 			for (Double d : resultList) {
 				System.out.println(d);
 			}
+		}
+	}
+
+	public void resultsGreaterThanInputValue(double value) {
+		List<Double> filterList = resultList.stream()
+			.filter(result -> result > value )
+			.toList();
+
+		if (filterList.isEmpty()) {
+			System.out.println(value + "보다 큰 값이 없습니다.");
+		} else {
+			System.out.println(value + "보다 큰 값들: ");
+			filterList.forEach(System.out::println);
 		}
 	}
 }
