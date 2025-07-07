@@ -15,7 +15,7 @@ import operator.Operator;
 import operator.SubtractOperator;
 import operator.enums.OperatorType;
 
-public class ArithmeticCalculator extends Calculator {
+public class ArithmeticCalculator<T extends Number> extends Calculator {
 	private final List<Double> resultList;
 
 	private final Map<OperatorType, Operator> operatorMap;
@@ -31,19 +31,19 @@ public class ArithmeticCalculator extends Calculator {
 		operatorMap.put(OperatorType.MODULO, new ModOperator());
 	}
 
-	public Double calculate(int num1, int num2, String operatorSymbol) throws InvalidOperatorException, DivideByZeroException {
+	public Double calculate(T num1, T num2, String operatorSymbol) throws InvalidOperatorException, DivideByZeroException {
 		OperatorType oprType = OperatorType.fromSymbol(operatorSymbol);
 		if (oprType == null) {
 			throw new InvalidOperatorException("잘못된 연산자입니다. +, -, *, /, % 중 하나를 입력해주세요.");
 		}
 
-		if ((oprType == OperatorType.DIVIDE || oprType == OperatorType.MODULO) && num2 == 0) {
+		if ((oprType == OperatorType.DIVIDE || oprType == OperatorType.MODULO) && num2.doubleValue() == 0) {
 			String msg = oprType == OperatorType.DIVIDE ? "나눗셈" : "나머지";
 			throw new DivideByZeroException(msg + " 연산에서 분모(두번째 정수)에 0이 입력될 수 없습니다.");
 		}
 
 		Operator opr = operatorMap.get(oprType);
-		double result = opr.operate(num1, num2);
+		double result = opr.operate(num1.doubleValue(), num2.doubleValue());
 		resultList.add(result);
 		return result;
 	}

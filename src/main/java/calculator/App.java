@@ -66,14 +66,14 @@ public class App {
 	}
 
 	private static void calculate(ArithmeticCalculator arithmeticCalculator, Scanner sc) {
-		int firstNum = 0;
+		double firstNum = 0;
 		do {
 			System.out.println("첫 번째 숫자를 입력하세요: ");
-			while (!sc.hasNextInt()) {
+			while (!sc.hasNextDouble()) {
 				System.out.println("숫자를 입력해주세요.");
 				sc.next();
 			}
-			firstNum = sc.nextInt();
+			firstNum = sc.nextDouble();
 			if (firstNum < 0) {
 				System.out.println("0 이상의 숫자를 입력해주세요.");
 			}
@@ -92,14 +92,14 @@ public class App {
 			}
 		} while (true);
 
-		int secondNum = 0;
+		double secondNum = 0;
 		do {
 			System.out.println("두 번째 숫자를 입력하세요: ");
-			while (!sc.hasNextInt()) {
+			while (!sc.hasNextDouble()) {
 				System.out.println("숫자를 입력해주세요.");
 				sc.next();
 			}
-			secondNum = sc.nextInt();
+			secondNum = sc.nextDouble();
 			if (secondNum < 0) {
 				System.out.println("0 이상의 숫자를 입력해주세요.");
 			}
