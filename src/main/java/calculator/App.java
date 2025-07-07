@@ -1,7 +1,5 @@
 package calculator;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 import exception.DivideByZeroException;
@@ -9,13 +7,14 @@ import exception.InvalidOperatorException;
 
 public class App {
 	public static void main(String[] args) {
-		Calculator calculator = new Calculator();
+		ArithmeticCalculator arithmeticCalculator = new ArithmeticCalculator();
+		CircleCalculator circleCalculator = new CircleCalculator();
 
 		Scanner sc = new Scanner(System.in);
 
 		boolean continueCalculation = true;
 		while (continueCalculation) {
-			System.out.println("1. 사칙연산 \n  2. 원 넓이 계산");
+			System.out.println("1. 사칙연산 \n2. 원 넓이 계산");
 
 			int choice = 0;
 
@@ -31,9 +30,9 @@ public class App {
 			} while (choice != 1 && choice != 2);
 
 			if (choice == 1) {
-				calculate(calculator, sc);
+				calculate(arithmeticCalculator, sc);
 			} else {
-				circleCalculate(calculator, sc);
+				circleCalculate(circleCalculator, sc);
 			}
 
 			sc.nextLine();
@@ -46,14 +45,17 @@ public class App {
 					continueCalculation = false;
 					break;
 				} else if (selectMenu.equals("remove")) {
-					if (calculator.hasResult()) {
-						calculator.removeFirstResult();
+					if (arithmeticCalculator.hasResult()) {
+						arithmeticCalculator.removeFirstResult();
 						System.out.println("삭제되었습니다.\n");
 					} else {
 						System.out.println("삭제할 결과가 없습니다.\n");
 					}
 				} else if (selectMenu.equals("inquiry")) {
-					calculator.inquiryResultList();
+					arithmeticCalculator.inquiryResultList();
+					System.out.println();
+				} else if (selectMenu.equals("circle")) {
+					circleCalculator.inquiryCircleList();
 					System.out.println();
 				} else {
 					break;
@@ -63,7 +65,7 @@ public class App {
 		sc.close();
 	}
 
-	private static void calculate(Calculator calculator, Scanner sc) {
+	private static void calculate(ArithmeticCalculator arithmeticCalculator, Scanner sc) {
 		int firstNum = 0;
 		do {
 			System.out.println("첫 번째 숫자를 입력하세요: ");
@@ -103,7 +105,7 @@ public class App {
 		} while (secondNum < 0);
 
 		try {
-			double result = calculator.calculate(firstNum, secondNum, operatorInput);
+			double result = arithmeticCalculator.calculate(firstNum, secondNum, operatorInput);
 			System.out.println("결과값: " + result);
 			System.out.println();
 		} catch (DivideByZeroException | InvalidOperatorException e) {
@@ -112,7 +114,7 @@ public class App {
 		}
 	}
 
-	private static void circleCalculate(Calculator calculator, Scanner sc) {
+	private static void circleCalculate(CircleCalculator circleCalculator, Scanner sc) {
 		double radius = 0;
 		do {
 			System.out.println("원의 반지름을 입력하세요: ");
@@ -126,7 +128,7 @@ public class App {
 			}
 		} while (radius < 0);
 
-		double result = calculator.calculateCircle(radius);
+		double result = circleCalculator.calculateCircle(radius);
 		System.out.println("원 넓이: " + result);
 		System.out.println();
 	}
@@ -134,18 +136,20 @@ public class App {
 	private static String showMenu(Scanner sc) {
 		String input = "";
 		do {
-			System.out.println("계속 계산은 y. \n종료는 n 또는 exit. \n가장 오래된 값 제거는 remove \n저장된 결과 전체 조회는 inquiry");
+			System.out.println("계속 계산은 y. \n종료는 n 또는 exit. \n가장 오래된 값 제거는 remove \n저장된 결과 전체 조회는 inquiry \n원 넓이 결과 조회는 circle");
 			input = sc.nextLine().trim().toLowerCase();
 
-			if (!input.equals("1") && !input.equals("y") && !input.equals("ㅛ")
-				&& !input.equals("2") && !input.equals("n") && !input.equals("ㅜ") && !input.equals("exit")
-				&& !input.equals("remove") && !input.equals("inquiry")) {
+			if (checkInputStringValue(input)) {
 				System.out.println("올바른 선택지를 입력해주세요.\n");
 			}
-		} while (!input.equals("1") && !input.equals("y") && !input.equals("ㅛ")
-			&& !input.equals("2") && !input.equals("n") && !input.equals("ㅜ") && !input.equals("exit")
-			&& !input.equals("remove") && !input.equals("inquiry"));
+		} while (checkInputStringValue(input));
 
 		return input;
+	}
+
+	private static boolean checkInputStringValue(String input) {
+		return !input.equals("1") && !input.equals("y") && !input.equals("ㅛ")
+			&& !input.equals("2") && !input.equals("n") && !input.equals("ㅜ") && !input.equals("exit")
+			&& !input.equals("remove") && !input.equals("inquiry") && !input.equals("circle");
 	}
 }
