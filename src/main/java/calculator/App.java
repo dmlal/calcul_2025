@@ -42,7 +42,7 @@ public class App {
 				if (operator != '+' && operator != '-' && operator != '*' && operator != '/') {
 					System.out.println("잘못된 연산자입니다. +, -, *, / 중 하나를 입력해주세요.");
 				}
-			} while (operator != '+' && operator != '-' && operator != '/');
+			} while (operator != '+' && operator != '-' && operator != '*' && operator != '/');
 
 			if (operator == '/' && secondNum == 0) {
 				System.out.println("나눗셈 연산에서 분모(두번째 정수)에 0이 입력될 수 없습니다.");
@@ -58,10 +58,21 @@ public class App {
 			};
 			System.out.println("결과값: " + result);
 
-			System.out.println("더 계산하시겠습니까? 계속 하시려면 아무 값이나 입력해주세요. (exit 입력 시 종료)");
-			sc.nextLine();
-			String input = sc.nextLine();
-			if (input.equals("exit")) {
+			String input = "";
+
+			do {
+				System.out.println("더 계산하시겠습니까? 계속 하시려면 y를 입력해주세요. (n 또는 exit 입력 시 종료)");
+				sc.nextLine();
+				input = sc.nextLine().trim().toLowerCase();
+
+				if (!input.equals("1") && !input.equals("y") && !input.equals("ㅛ")
+					&& !input.equals("2") && !input.equals("n") && !input.equals("ㅜ") && !input.equals("exit")) {
+					System.out.println("올바른 선택지를 입력해주세요.");
+				}
+			} while (!input.equals("1") && !input.equals("y") && !input.equals("ㅛ")
+				&& !input.equals("2") && !input.equals("n") && !input.equals("ㅜ") && !input.equals("exit"));
+
+			if (input.equals("exit") || input.equals("2") || input.equals("n") || input.equals("ㅜ")) {
 				System.out.println("계산을 종료합니다.");
 				break;
 			}
