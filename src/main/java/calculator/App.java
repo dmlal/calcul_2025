@@ -64,8 +64,15 @@ public class App {
 			resultArr[resultIndex] = result;
 			resultIndex++;
 
-			String input = "";
+			if (resultIndex == 10) {
+				for(int i = 0; i < 9; i++){
+					resultArr[i] = resultArr[i+1];
+				}
+				resultArr[9] = result;
+			}
 
+
+			String input = "";
 			do {
 				System.out.println("더 계산하시겠습니까? 계속 하시려면 y를 입력해주세요. (n 또는 exit 입력 시 종료)");
 				sc.nextLine();
