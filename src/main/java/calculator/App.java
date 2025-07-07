@@ -78,14 +78,8 @@ public class App {
 						System.out.println("삭제할 결과가 없습니다.\n");
 					}
 				} else if (selectMenu.equals("inquiry")) {
-					if (calculator.hasResult()) {
-						for (Double d : calculator.getResultList()) {
-							System.out.println(d);
-						}
-						System.out.println();
-					} else {
-						System.out.println("저장된 결과가 없습니다.\n");
-					}
+					calculator.inquiryResultList();
+					System.out.println();
 				} else {
 					break;
 				}
