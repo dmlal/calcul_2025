@@ -30,7 +30,6 @@
 - Double.MAX_VALUE,  Double.MIN_VALUE
 - 무한대 연산
 - NaN
-- 0과 -0.0
 - 부동소수점 정밀도
 
 3. 기능 테스트
