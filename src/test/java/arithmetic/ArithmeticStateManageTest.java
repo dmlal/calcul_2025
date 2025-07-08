@@ -12,11 +12,11 @@ import calculator.ArithmeticCalculator;
 
 public class ArithmeticStateManageTest {
 
-	private ArithmeticCalculator<Double> calculator = new ArithmeticCalculator();
+	private ArithmeticCalculator<Double> calculator = new ArithmeticCalculator<>();
 
 	@BeforeEach
 	public void setUp() {
-		calculator = new ArithmeticCalculator();
+		calculator = new ArithmeticCalculator<>();
 	}
 
 	@Test
