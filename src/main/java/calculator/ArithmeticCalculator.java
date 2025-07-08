@@ -38,7 +38,7 @@ public class ArithmeticCalculator<T extends Number> extends Calculator<T> {
 
 		if ((oprType == OperatorType.DIVIDE || oprType == OperatorType.MODULO) && num2.doubleValue() == 0) {
 			String msg = oprType == OperatorType.DIVIDE ? "나눗셈" : "나머지";
-			throw new DivideByZeroException(msg + " 연산에서 분모(두번째 정수)에 0이 입력될 수 없습니다.");
+			throw new DivideByZeroException(msg + " 연산에서 분모(두번째 숫자)에 0이 입력될 수 없습니다.");
 		}
 
 		Operator opr = operatorMap.get(oprType);
